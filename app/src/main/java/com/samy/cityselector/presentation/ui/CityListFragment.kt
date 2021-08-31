@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.samy.cityselector.R
+import com.samy.cityselector.presentation.entities.CityListViewStates
 import com.samy.cityselector.presentation.viewmodel.CitiesListVIewModel
+import kotlinx.android.synthetic.main.fragment_city_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CityListFragment : Fragment() {
-    private val citiesListVIewModel by viewModel<CitiesListVIewModel>()
+    private val citiesListViewModel by viewModel<CitiesListVIewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,13 +22,51 @@ class CityListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        citiesListVIewModel.onViewCreated()
+        citiesListViewModel.onViewCreated()
         setHasOptionsMenu(true)
         observeLiveData()
     }
 
     private fun observeLiveData() {
-        citiesListVIewModel.cityListViewStates.observe(viewLifecycleOwner) {}
+        citiesListViewModel.cityListViewStates.observe(viewLifecycleOwner) { handleViewState(it) }
+    }
+
+    private fun handleViewState(state: CityListViewStates) {
+        when (state) {
+            is CityListViewStates.Loading -> handleLoading()
+            is CityListViewStates.Empty -> handleEmpty()
+            is CityListViewStates.Error -> handleError(state)
+            is CityListViewStates.Content -> handleContent(state)
+        }
+    }
+
+    private fun handleContent(state: CityListViewStates.Content) {
+        cityList.layoutManager = LinearLayoutManager(context)
+        val adapter = VenueListAdapter(state.citiesListViewEntity)
+        cityList.adapter = adapter
+        cityList.visibility = View.VISIBLE
+        listError.visibility = View.GONE
+        listLoader.visibility = View.GONE
+    }
+
+    private fun handleError(state: CityListViewStates.Error) {
+        listError.text = getString(R.string.general_error)
+        cityList.visibility = View.GONE
+        listError.visibility = View.VISIBLE
+        listLoader.visibility = View.GONE
+    }
+
+    private fun handleEmpty() {
+        listError.text = getString(R.string.empty_error)
+        cityList.visibility = View.GONE
+        listError.visibility = View.VISIBLE
+        listLoader.visibility = View.GONE
+    }
+
+    private fun handleLoading() {
+        cityList.visibility = View.GONE
+        listError.visibility = View.GONE
+        listLoader.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

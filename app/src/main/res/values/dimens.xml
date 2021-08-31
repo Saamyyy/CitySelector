@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="l">24dp</dimen>
+    <dimen name="m">20dp</dimen>
+    <dimen name="s">16dp</dimen>
+    <dimen name="xl">32dp</dimen>
+    <dimen name="xs">12dp</dimen>
+    <dimen name="xxl">40dp</dimen>
+    <dimen name="xxs">8dp</dimen>
+    <dimen name="xxxl">44dp</dimen>
+    <dimen name="xxxs">4dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="large_text_size">16sp</dimen>
+    <dimen name="medium_text_size">12sp</dimen>
+</resources>
