@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.samy.cityselector"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Android Jetpack
+    implementation Libs.legacy
+    implementation Libs.kotlinStdLib
+    implementation Libs.appCompat
+    implementation Libs.androidXCore
+    implementation Libs.architectureComponentsExtensions
+    implementation Libs.liveData
+    implementation Libs.navigationCore
+    implementation Libs.navigationKtx
+
+    // Android Jetpack UI
+    implementation Libs.materialDesign
+    implementation Libs.constraintLayout
+    implementation Libs.cardView
+    implementation Libs.fragment
+    // Dependency Injection
+    implementation Libs.koinCore
+    implementation Libs.koinScope
+    implementation Libs.koinViewModel
+    //kotlin coroutines
+    implementation Libs.kotlinCoroutines
+    implementation Libs.kotlinCoroutinesAndroid
+    // gson
+    implementation Libs.gson
+    // Location
+    implementation Libs.googleLocation
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //test
+    testImplementation Libs.junit
+    testImplementation Libs.mockito
+    testImplementation Libs.mockitoAndroid
+    testImplementation Libs.mockitoKotlin2
+    androidTestImplementation Libs.androidXTest
+    androidTestImplementation Libs.espresso
+    testImplementation Libs.mockitoInLine
+    testImplementation Libs.archCoreTesting
+    testImplementation Libs.coroutinesTest
+}
