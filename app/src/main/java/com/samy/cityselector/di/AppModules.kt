@@ -8,6 +8,8 @@ import com.samy.cityselector.data.localdata.CityRawLocalDataSource
 import com.samy.cityselector.data.localdata.CityRawLocalDataSourceImpl
 import com.samy.cityselector.data.mapper.CityDomainMapper
 import com.samy.cityselector.domain.CityRepository
+import com.samy.cityselector.domain.mapper.CityViewEntityMapper
+import com.samy.cityselector.domain.usecase.GetCitesList
 import org.koin.dsl.module
 
 
@@ -19,10 +21,13 @@ val dataModule = module {
 
     single<CityRawLocalDataSource> { CityRawLocalDataSourceImpl(get(), get()) }
 
-    single { CityDomainMapper() }
+    factory { CityDomainMapper() }
 
-    single<CityRepository> { CityRepositoryImpl(get(), get()) }
+    factory<CityRepository> { CityRepositoryImpl(get(), get()) }
 }
-val domainModule = module {}
+val domainModule = module {
+    factory { CityViewEntityMapper() }
+    factory { GetCitesList(get(), get()) }
+}
 val viewModelModule = module {}
 
