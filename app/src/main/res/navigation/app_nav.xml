@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/cityListFragment"
-        android:name="com.samy.cityselector.CityListFragment"
+        android:name="com.samy.cityselector.presentation.ui.CityListFragment"
         android:label="fragment_city_list"
         tools:layout="@layout/fragment_city_list" />
 </navigation>
