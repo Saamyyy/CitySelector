@@ -42,7 +42,7 @@ class CityListFragment : Fragment() {
 
     private fun handleContent(state: CityListViewStates.Content) {
         cityList.layoutManager = LinearLayoutManager(context)
-        val adapter = VenueListAdapter(state.citiesListViewEntity)
+        val adapter = CitiesListAdapter(state.citiesListViewEntity)
         cityList.adapter = adapter
         cityList.visibility = View.VISIBLE
         listError.visibility = View.GONE

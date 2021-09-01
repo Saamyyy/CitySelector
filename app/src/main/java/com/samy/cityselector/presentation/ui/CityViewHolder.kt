@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.samy.cityselector.R
 import com.samy.cityselector.presentation.entities.CityViewEntityItem
 
-class VenueViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
+class CityViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
     View.inflate(parentView.context, R.layout.city_list_item, null)
 ) {
     private val tittle: TextView by lazy { itemView.findViewById(R.id.cityName) }
