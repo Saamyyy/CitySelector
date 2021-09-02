@@ -1,11 +1,13 @@
 package com.samy.cityselector.domain.usecase
 
-import com.samy.cityselector.domain.CityRepository
-import com.samy.cityselector.domain.mapper.CityViewEntityMapper
-
 class GetCitesList constructor(
-    private val cityRepository: CityRepository,
-    private val mapper: CityViewEntityMapper
+    private val getAllCities: GetAllCities,
+    private val searchCities: SearchCities
 ) {
-    suspend fun getCitesList() = mapper.apply(cityRepository.getCities())
+    suspend fun getCitesList(searchTerm: String = "") =
+        if (searchTerm.isEmpty() || searchTerm.isBlank()) {
+            getAllCities.getCitesList()
+        } else {
+            searchCities.applySearchTerm(searchTerm)
+        }
 }

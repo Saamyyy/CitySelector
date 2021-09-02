@@ -8,13 +8,18 @@ import java.util.*
 
 class SearchCities(
     private val cityRepository: CityRepository,
-    private val mapper: CityViewEntityMapper
+    private val mapper: CityViewEntityMapper,
+    private val applySearchTerm: ApplySearchTerm,
+    private val applySortRules: ApplySortRules
 ) {
     suspend fun applySearchTerm(searchTerm: String): CitiesListViewEntity {
-        val sortedCities = cityRepository.getCities()
-            .cities
-            .filter { it.cityNameCountry.lowercase().startsWith(searchTerm.lowercase()) }
-            .sortedBy { it.cityNameCountry }
-        return mapper.apply(CityDomain(sortedCities))
+        val allCities = cityRepository.getCities()
+        return mapper.apply(applySortRules(getFilteredCities(allCities, searchTerm)))
     }
+
+    private suspend fun getFilteredCities(allCities: CityDomain, searchTerm: String) =
+        applySearchTerm.applySearchTerm(allCities, searchTerm)
+
+    private suspend fun applySortRules(allCities: CityDomain) =
+        applySortRules.applySortRules(allCities)
 }

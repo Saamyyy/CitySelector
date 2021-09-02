@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samy.cityselector.domain.usecase.GetCitesList
-import com.samy.cityselector.domain.usecase.SearchCities
 import com.samy.cityselector.presentation.entities.CityListAction
 import com.samy.cityselector.presentation.entities.CityListViewStates
 import com.samy.cityselector.presentation.entities.NoResultFound
@@ -12,7 +11,6 @@ import kotlinx.coroutines.*
 
 class CitiesListVIewModel(
     private val getCitesList: GetCitesList,
-    private val searchCities: SearchCities,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
     val cityListViewStates: MutableLiveData<CityListViewStates> =
@@ -52,11 +50,7 @@ class CitiesListVIewModel(
 
     private suspend fun getCitiesList(searchTerm: String) {
         cityListViewStates.postValue(CityListViewStates(isProgress = true))
-        val citesList =
-            if (searchTerm.trim().isEmpty())
-                getCitesList.getCitesList()
-            else
-                searchCities.applySearchTerm(searchTerm)
+        val citesList = getCitesList.getCitesList(searchTerm)
         if (citesList.cities.isEmpty()) {
             cityListViewStates.postValue(CityListViewStates(error = NoResultFound))
         } else {

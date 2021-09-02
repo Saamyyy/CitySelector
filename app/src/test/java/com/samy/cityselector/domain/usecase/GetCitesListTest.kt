@@ -1,48 +1,45 @@
 package com.samy.cityselector.domain.usecase
 
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
-import com.samy.cityselector.domain.CityRepository
-import com.samy.cityselector.domain.entities.CityDomain
-import com.samy.cityselector.domain.entities.CityDomainItem
-import com.samy.cityselector.domain.mapper.CityViewEntityMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
+
 class GetCitesListTest {
-    private val cityRepository: CityRepository = mock()
-    private val mapper: CityViewEntityMapper = mock()
+    private val getAllCities: GetAllCities = mock()
+    private val searchCities: SearchCities = mock()
 
-    private val useCase = GetCitesList(cityRepository, mapper)
+    private val getCitesList = GetCitesList(getAllCities, searchCities)
 
     @Test
-    fun `calling getCitesList should call apply from mapper`() {
+    fun `calling getCitesList with empty string should getAllCities`() {
         runBlocking {
-            // arrange
-            val cityDomainItem = CityDomainItem(
-                cityNameCountry = "cairo, EG",
-                lat = "lat",
-                lon = "lon"
-            )
-            val cityDomain = CityDomain(listOf(cityDomainItem))
-            whenever(cityRepository.getCities()).thenReturn(cityDomain)
             // act
-            useCase.getCitesList()
+            getCitesList.getCitesList("")
             // assert
-            verify(mapper).apply(any())
+            verify(getAllCities).getCitesList()
         }
     }
 
     @Test
-    fun `calling getCitesList should call getCities from cityRepository`() {
+    fun `calling getCitesList with blank string should getAllCities`() {
         runBlocking {
             // act
-            useCase.getCitesList()
+            getCitesList.getCitesList("         ")
             // assert
-            verify(cityRepository).getCities()
+            verify(getAllCities).getCitesList()
         }
     }
 
+    @Test
+    fun `calling getCitesList with valid string should applySearchTerm`() {
+        runBlocking {
+            val searchTerm = "search"
+            // act
+            getCitesList.getCitesList(searchTerm)
+            // assert
+            verify(searchCities).applySearchTerm(searchTerm)
+        }
+    }
 }
