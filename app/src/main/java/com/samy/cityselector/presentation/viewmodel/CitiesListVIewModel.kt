@@ -26,22 +26,28 @@ class CitiesListVIewModel(
         }
 
     init {
-        cityListAction.postValue(CityListAction.CityListInit)
-        cityListAction.observeForever { model(it) }
+        cityListAction.postValue(CityListAction.InitCityList)
+        cityListAction.observeForever { handleActions(it) }
     }
 
-    private fun model(it: CityListAction?) {
-        searchJob?.cancelChildren()
-        searchJob?.cancel()
-        searchJob = viewModelScope.launch (exceptionHandler + dispatcher) {
+    private fun handleActions(it: CityListAction?) {
+        cancelActiveJobs()
+        searchJob = viewModelScope.launch(exceptionHandler + dispatcher) {
             when (it) {
-                is CityListAction.CityListInit -> getCitiesList("")
-                is CityListAction.Search -> {
-                    delay(200)
-                    getCitiesList(it.term)
-                }
+                is CityListAction.InitCityList -> getCitiesList("")
+                is CityListAction.SearchCityList -> handleSearchAction(it)
             }
         }
+    }
+
+    private fun cancelActiveJobs() {
+        searchJob?.cancelChildren()
+        searchJob?.cancel()
+    }
+
+    private suspend fun handleSearchAction(searchCityListAction: CityListAction.SearchCityList) {
+        delay(200)
+        getCitiesList(searchCityListAction.term)
     }
 
     private suspend fun getCitiesList(searchTerm: String) {

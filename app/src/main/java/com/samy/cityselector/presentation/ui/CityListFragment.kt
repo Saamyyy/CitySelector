@@ -1,7 +1,6 @@
 package com.samy.cityselector.presentation.ui
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
 import android.widget.SearchView
 import androidx.core.view.isVisible
@@ -87,7 +86,7 @@ class CityListFragment : Fragment() {
     ) {
             citiesListViewModel
                 .cityListAction
-                .postValue(CityListAction.Search(newText))
+                .postValue(CityListAction.SearchCityList(newText))
 
     }
 }

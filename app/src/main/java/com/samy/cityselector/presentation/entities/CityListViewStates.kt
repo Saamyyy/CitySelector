@@ -7,6 +7,6 @@ data class CityListViewStates(
 )
 
 sealed class CityListAction {
-    object CityListInit : CityListAction()
-    data class Search(val term: String) : CityListAction()
+    object InitCityList : CityListAction()
+    data class SearchCityList(val term: String) : CityListAction()
 }
