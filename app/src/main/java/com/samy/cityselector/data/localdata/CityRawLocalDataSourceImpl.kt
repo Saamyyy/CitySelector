@@ -10,11 +10,15 @@ class CityRawLocalDataSourceImpl constructor(
     private val gson: Gson
 ) : CityRawLocalDataSource {
 
-    override suspend fun getCitiesRaw(): CityRaw =
+    private val citiesList by lazy {
         context
             .resources
             .openRawResource(R.raw.cities)
             .bufferedReader()
             .use { it.readText() }
             .let { gson.fromJson(it, CityRaw::class.java) }
+    }
+
+    override suspend fun getCitiesRaw(): CityRaw = citiesList
+
 }
