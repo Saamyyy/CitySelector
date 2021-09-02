@@ -19,7 +19,6 @@ import org.junit.Test
 
 class CitiesListVIewModelTest : ViewModelTest() {
     private val getCitesList: GetCitesList = mock()
-    private val searchCities: SearchCities = mock()
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 
     @Test
@@ -37,7 +36,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             whenever(getCitesList.getCitesList()).thenReturn(citiesListViewEntity)
             val expected = CityListViewStates(citiesListViewEntity = citiesListViewEntity)
             // act
-            val viewModel = CitiesListVIewModel(getCitesList,searchCities,dispatcher)
+            val viewModel = CitiesListVIewModel(getCitesList,dispatcher)
             // assert
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }
@@ -52,7 +51,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             whenever(getCitesList.getCitesList()).thenReturn(citiesListViewEntity)
             val expected = CityListViewStates(error = NoResultFound)
             // act
-            val viewModel = CitiesListVIewModel(getCitesList,searchCities,dispatcher)
+            val viewModel = CitiesListVIewModel(getCitesList,dispatcher)
             // assert
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }
@@ -68,7 +67,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             }
             val expected = CityListViewStates(error = throwable)
             // act
-            val viewModel = CitiesListVIewModel(getCitesList,searchCities,dispatcher)
+            val viewModel = CitiesListVIewModel(getCitesList,dispatcher)
             // assert
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }

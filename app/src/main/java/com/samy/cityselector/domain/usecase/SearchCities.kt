@@ -17,9 +17,9 @@ class SearchCities(
         return mapper.apply(applySortRules(getFilteredCities(allCities, searchTerm)))
     }
 
-    private suspend fun getFilteredCities(allCities: CityDomain, searchTerm: String) =
+    private fun getFilteredCities(allCities: CityDomain, searchTerm: String) =
         applySearchTerm.applySearchTerm(allCities, searchTerm)
 
-    private suspend fun applySortRules(allCities: CityDomain) =
+    private fun applySortRules(allCities: CityDomain) =
         applySortRules.applySortRules(allCities)
 }
