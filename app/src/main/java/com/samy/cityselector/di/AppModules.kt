@@ -10,6 +10,7 @@ import com.samy.cityselector.data.mapper.CityDomainMapper
 import com.samy.cityselector.domain.CityRepository
 import com.samy.cityselector.domain.mapper.CityViewEntityMapper
 import com.samy.cityselector.domain.usecase.GetCitesList
+import com.samy.cityselector.domain.usecase.SearchCities
 import com.samy.cityselector.presentation.viewmodel.CitiesListVIewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -25,13 +26,14 @@ val dataModule = module {
 
     factory { CityDomainMapper() }
 
-    factory<CityRepository> { CityRepositoryImpl(get(), get()) }
+    single<CityRepository> { CityRepositoryImpl(get(), get()) }
 }
 val domainModule = module {
     factory { CityViewEntityMapper() }
     factory { GetCitesList(get(), get()) }
+    factory { SearchCities(get(),get()) }
 }
 val viewModelModule = module {
-    viewModel { CitiesListVIewModel(get()) }
+    viewModel { CitiesListVIewModel(get(),get()) }
 }
 

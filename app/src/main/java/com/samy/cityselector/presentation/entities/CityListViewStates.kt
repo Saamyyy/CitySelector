@@ -1,8 +1,12 @@
 package com.samy.cityselector.presentation.entities
 
-sealed class CityListViewStates {
-    object Loading: CityListViewStates()
-    object Empty: CityListViewStates()
-    data class Error(val message:String): CityListViewStates()
-    data class Content(val citiesListViewEntity: CitiesListViewEntity):CityListViewStates()
+data class CityListViewStates(
+    val isProgress: Boolean = false,
+    val citiesListViewEntity: CitiesListViewEntity = CitiesListViewEntity(emptyList()),
+    val error: Throwable? = null
+)
+
+sealed class CityListAction {
+    object CityListInit : CityListAction()
+    data class Search(val term: String) : CityListAction()
 }
