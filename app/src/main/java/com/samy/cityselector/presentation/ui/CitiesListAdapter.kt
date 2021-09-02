@@ -1,20 +1,35 @@
 package com.samy.cityselector.presentation.ui
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.samy.cityselector.presentation.entities.CitiesListViewEntity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import com.samy.cityselector.presentation.entities.CityViewEntityItem
 
-class CitiesListAdapter(private val citiesListViewEntity: CitiesListViewEntity) :
-    RecyclerView.Adapter<CityViewHolder>() {
+class CitiesListAdapter :
+    ListAdapter<CityViewEntityItem, CityViewHolder>(CityViewEntityItemDiffUtils()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
         return CityViewHolder(parent)
     }
 
-    override fun getItemCount(): Int {
-        return citiesListViewEntity.cities.size
+    override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+}
+
+class CityViewEntityItemDiffUtils : DiffUtil.ItemCallback<CityViewEntityItem>() {
+    override fun areItemsTheSame(
+        oldItem: CityViewEntityItem,
+        newItem: CityViewEntityItem
+    ): Boolean {
+        return oldItem == newItem
     }
 
-    override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
-        holder.bind(citiesListViewEntity.cities[position])
+    override fun areContentsTheSame(
+        oldItem: CityViewEntityItem,
+        newItem: CityViewEntityItem
+    ): Boolean {
+        return oldItem.title == newItem.supTitle
     }
+
+
 }

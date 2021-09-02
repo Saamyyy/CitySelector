@@ -1,12 +1,16 @@
 package com.samy.cityselector.presentation.ui
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.*
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samy.cityselector.R
+import com.samy.cityselector.presentation.entities.CityListAction
 import com.samy.cityselector.presentation.entities.CityListViewStates
+import com.samy.cityselector.presentation.entities.NoResultFound
 import com.samy.cityselector.presentation.viewmodel.CitiesListVIewModel
 import kotlinx.android.synthetic.main.fragment_city_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -14,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CityListFragment : Fragment() {
     private val citiesListViewModel by viewModel<CitiesListVIewModel>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,51 +25,39 @@ class CityListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        citiesListViewModel.onViewCreated()
         setHasOptionsMenu(true)
         observeLiveData()
     }
 
     private fun observeLiveData() {
-        citiesListViewModel.cityListViewStates.observe(viewLifecycleOwner) { handleViewState(it) }
-    }
-
-    private fun handleViewState(state: CityListViewStates) {
-        when (state) {
-            is CityListViewStates.Loading -> handleLoading()
-            is CityListViewStates.Empty -> handleEmpty()
-            is CityListViewStates.Error -> handleError(state)
-            is CityListViewStates.Content -> handleContent(state)
+        val adapter = createListAdapter()
+        citiesListViewModel.cityListViewStates.observe(viewLifecycleOwner) {
+            renderUiStates(
+                it,
+                adapter
+            )
         }
     }
 
-    private fun handleContent(state: CityListViewStates.Content) {
+    private fun createListAdapter(): CitiesListAdapter {
         cityList.layoutManager = LinearLayoutManager(context)
-        val adapter = CitiesListAdapter(state.citiesListViewEntity)
+        val adapter = CitiesListAdapter()
         cityList.adapter = adapter
-        cityList.visibility = View.VISIBLE
-        listError.visibility = View.GONE
-        listLoader.visibility = View.GONE
+        return adapter
     }
 
-    private fun handleError(state: CityListViewStates.Error) {
-        listError.text = getString(R.string.general_error)
-        cityList.visibility = View.GONE
-        listError.visibility = View.VISIBLE
-        listLoader.visibility = View.GONE
+    private fun renderUiStates(
+        it: CityListViewStates,
+        adapter: CitiesListAdapter
+    ) {
+        listError.text = if (it.error != null) getErrorMessage(it.error) else null
+        listLoader.isVisible = it.isProgress
+        adapter.submitList(it.citiesListViewEntity.cities)
     }
 
-    private fun handleEmpty() {
-        listError.text = getString(R.string.empty_error)
-        cityList.visibility = View.GONE
-        listError.visibility = View.VISIBLE
-        listLoader.visibility = View.GONE
-    }
-
-    private fun handleLoading() {
-        cityList.visibility = View.GONE
-        listError.visibility = View.GONE
-        listLoader.visibility = View.VISIBLE
+    private fun getErrorMessage(error: Throwable) = when (error) {
+        is NoResultFound -> getString(R.string.empty_error)
+        else -> getString(R.string.general_error)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -86,9 +77,17 @@ class CityListFragment : Fragment() {
     private fun onQueryTextListener() = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?) = false
         override fun onQueryTextChange(newText: String): Boolean {
-//            viewModel.searchTerm.onNext(newText)
+                pushCityListAction(newText)
             return false
         }
+    }
+
+    private fun pushCityListAction(
+        newText: String
+    ) {
+            citiesListViewModel
+                .cityListAction
+                .postValue(CityListAction.Search(newText))
 
     }
 }
