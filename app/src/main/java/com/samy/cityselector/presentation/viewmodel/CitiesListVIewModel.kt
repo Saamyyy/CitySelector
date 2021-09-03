@@ -11,12 +11,13 @@ import kotlinx.coroutines.*
 
 class CitiesListVIewModel(
     private val getCitesList: GetCitesList,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val cancelDelayPeriod: Long = 200L
 ) : ViewModel() {
     val cityListViewStates: MutableLiveData<CityListViewStates> =
         MutableLiveData<CityListViewStates>()
     val cityListAction: MutableLiveData<CityListAction> = MutableLiveData<CityListAction>()
-    var currentSearchTerm:String=""
+    var currentSearchTerm: String = ""
 
     private var searchJob: Job? = null
     private val exceptionHandler: CoroutineExceptionHandler =
@@ -45,8 +46,8 @@ class CitiesListVIewModel(
     }
 
     private suspend fun handleSearchAction(searchCityListAction: CityListAction.SearchCityList) {
-        delay(200)
-        currentSearchTerm= searchCityListAction.term
+        delay(cancelDelayPeriod)
+        currentSearchTerm = searchCityListAction.term
         getCitiesList(searchCityListAction.term)
     }
 

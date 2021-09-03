@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.samy.cityselector.R
@@ -20,13 +21,14 @@ class CityViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
         tittle.text = cityViewEntityItem.title
         supTitle.text = cityViewEntityItem.supTitle
         cityItemContainer.setOnClickListener {
-            val action = CityListFragmentDirections.actionCityListFragmentToCityMapFragment(
-                lat = cityViewEntityItem.lat,
-                lon = cityViewEntityItem.lon,
-                cityName = cityViewEntityItem.title
-            )
-
-            itemView.findNavController().navigate(action)
+            itemView.findNavController().navigate(getNavDirections(cityViewEntityItem))
         }
     }
+
+    private fun getNavDirections(cityViewEntityItem: CityViewEntityItem): NavDirections =
+        CityListFragmentDirections.actionCityListFragmentToCityMapFragment(
+            lat = cityViewEntityItem.lat,
+            lon = cityViewEntityItem.lon,
+            cityName = cityViewEntityItem.title
+        )
 }
