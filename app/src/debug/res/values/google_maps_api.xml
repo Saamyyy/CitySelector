@@ -1,0 +1,22 @@
+<resources>
+    <!--
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=C8:49:85:25:F8:66:BE:EB:8E:9C:43:C9:19:25:08:2C:7D:B0:9F:BD%3Bcom.samy.cityselector.presentation.ui.citymap
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.samy.cityselector.presentation.ui.citymap
+
+    SHA-1 certificate fingerprint:
+    C8:49:85:25:F8:66:BE:EB:8E:9C:43:C9:19:25:08:2C:7D:B0:9F:BD
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBEAukzPsV9v74ARhRD_EBc4jIvLq9ng0U</string>
+</resources>

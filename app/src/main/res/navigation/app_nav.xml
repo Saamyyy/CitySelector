@@ -9,5 +9,30 @@
         android:id="@+id/cityListFragment"
         android:name="com.samy.cityselector.presentation.ui.CityListFragment"
         android:label="fragment_city_list"
-        tools:layout="@layout/fragment_city_list" />
+        tools:layout="@layout/fragment_city_list" >
+        <action
+            android:id="@+id/action_cityListFragment_to_cityMapFragment"
+            app:destination="@id/cityMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityMapFragment"
+        android:name="com.samy.cityselector.presentation.ui.citymap.CityMapFragment"
+        android:label="fragment_city_map"
+        tools:layout="@layout/fragment_city_map" >
+        <argument
+            android:name="lon"
+            app:argType="string"
+            android:defaultValue='151.0'
+            app:nullable="false"/>
+        <argument
+            android:name="lat"
+            app:nullable="false"
+            app:argType="string"
+            android:defaultValue='-34.0' />
+        <argument
+            android:name="cityName"
+            app:nullable="false"
+            app:argType="string"
+            android:defaultValue='' />
+    </fragment>
 </navigation>

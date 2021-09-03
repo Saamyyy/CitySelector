@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/xs"
-    android:layout_marginBottom="@dimen/xs">
+    android:layout_marginBottom="@dimen/xs"
+    android:id="@+id/cityItemContainer">
 
     <TextView
         android:id="@+id/cityName"
