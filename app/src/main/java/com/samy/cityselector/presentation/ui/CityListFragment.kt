@@ -69,8 +69,20 @@ class CityListFragment : Fragment() {
         val searchViewMenuItem: MenuItem = menu.findItem(R.id.search)
         val searchView = searchViewMenuItem.actionView as SearchView
         searchView.queryHint = resources.getString(R.string.search_hint)
+        handleSearchQuaryValue(searchViewMenuItem, searchView)
         searchView.clearFocus()
         searchView.setOnQueryTextListener(onQueryTextListener())
+    }
+
+    private fun handleSearchQuaryValue(
+        searchViewMenuItem: MenuItem,
+        searchView: SearchView
+    ) {
+        if (!citiesListViewModel.currentSearchTerm.isNullOrEmpty()) {
+            searchViewMenuItem.expandActionView()
+            searchView.isIconified = false
+            searchView.setQuery(citiesListViewModel.currentSearchTerm, false)
+        }
     }
 
     private fun onQueryTextListener() = object : SearchView.OnQueryTextListener {

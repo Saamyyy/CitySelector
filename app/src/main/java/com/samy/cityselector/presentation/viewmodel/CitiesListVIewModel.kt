@@ -16,6 +16,7 @@ class CitiesListVIewModel(
     val cityListViewStates: MutableLiveData<CityListViewStates> =
         MutableLiveData<CityListViewStates>()
     val cityListAction: MutableLiveData<CityListAction> = MutableLiveData<CityListAction>()
+    var currentSearchTerm:String=""
 
     private var searchJob: Job? = null
     private val exceptionHandler: CoroutineExceptionHandler =
@@ -45,6 +46,7 @@ class CitiesListVIewModel(
 
     private suspend fun handleSearchAction(searchCityListAction: CityListAction.SearchCityList) {
         delay(200)
+        currentSearchTerm= searchCityListAction.term
         getCitiesList(searchCityListAction.term)
     }
 
