@@ -4,18 +4,16 @@ import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.samy.cityselector.domain.usecase.GetCitesList
-import com.samy.cityselector.domain.usecase.SearchCities
 import com.samy.cityselector.helper.ViewModelTest
 import com.samy.cityselector.presentation.entities.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 
 
-class CitiesListVIewModelTest : ViewModelTest() {
+class CitiesListViewModelTest : ViewModelTest() {
     private val getCitesList: GetCitesList = mock()
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 
@@ -34,7 +32,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             whenever(getCitesList.getCitesList()).thenReturn(citiesListViewEntity)
             val expected = CityListViewStates(citiesListViewEntity = citiesListViewEntity)
             // act
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher)
             // assert
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }
@@ -49,7 +47,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             whenever(getCitesList.getCitesList()).thenReturn(citiesListViewEntity)
             val expected = CityListViewStates(error = NoResultFound)
             // act
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher)
             // assert
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }
@@ -65,7 +63,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             }
             val expected = CityListViewStates(error = throwable)
             // act
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher)
             // assert
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }
@@ -86,7 +84,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             val citiesListViewEntity = CitiesListViewEntity(listOf(cityViewEntityItem))
             whenever(getCitesList.getCitesList(searchTerm)).thenReturn(citiesListViewEntity)
             val expected = CityListViewStates(citiesListViewEntity = citiesListViewEntity)
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher,0)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher,0)
             // act
             viewModel.cityListAction.value=CityListAction.SearchCityList(searchTerm)
             // assert
@@ -102,7 +100,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             val citiesListViewEntity = CitiesListViewEntity(listOf())
             whenever(getCitesList.getCitesList(searchTerm)).thenReturn(citiesListViewEntity)
             val expected = CityListViewStates(error = NoResultFound)
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher,0)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher,0)
             // act
             viewModel.cityListAction.value=CityListAction.SearchCityList(searchTerm)
             // assert
@@ -120,7 +118,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
                 throw throwable
             }
             val expected = CityListViewStates(error = throwable)
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher,0)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher,0)
             // act
             viewModel.cityListAction.value=CityListAction.SearchCityList(searchTerm)
             // assert
@@ -136,7 +134,7 @@ class CitiesListVIewModelTest : ViewModelTest() {
             whenever(getCitesList.getCitesList(searchTerm)) doAnswer {
                 throw throwable
             }
-            val viewModel = CitiesListVIewModel(getCitesList,dispatcher,0)
+            val viewModel = CitiesListViewModel(getCitesList,dispatcher,0)
             viewModel.cityListAction.value=CityListAction.SearchCityList(searchTerm)
             // act
            val actual=  viewModel.currentSearchTerm

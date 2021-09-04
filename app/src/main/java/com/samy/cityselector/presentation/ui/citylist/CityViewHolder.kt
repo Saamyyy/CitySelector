@@ -1,4 +1,4 @@
-package com.samy.cityselector.presentation.ui
+package com.samy.cityselector.presentation.ui.citylist
 
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +14,11 @@ class CityViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
     View.inflate(parentView.context, R.layout.city_list_item, null)
 ) {
     private val cityItemContainer: ConstraintLayout by lazy { itemView.findViewById(R.id.cityItemContainer) }
-    private val tittle: TextView by lazy { itemView.findViewById(R.id.cityName) }
+    private val title: TextView by lazy { itemView.findViewById(R.id.cityName) }
     private val supTitle: TextView by lazy { itemView.findViewById(R.id.cityLocation) }
 
     fun bind(cityViewEntityItem: CityViewEntityItem) {
-        tittle.text = cityViewEntityItem.title
+        title.text = cityViewEntityItem.title
         supTitle.text = cityViewEntityItem.supTitle
         cityItemContainer.setOnClickListener {
             itemView.findNavController().navigate(getNavDirections(cityViewEntityItem))

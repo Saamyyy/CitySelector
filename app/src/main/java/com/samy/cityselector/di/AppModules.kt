@@ -10,7 +10,7 @@ import com.samy.cityselector.data.mapper.CityDomainMapper
 import com.samy.cityselector.domain.CityRepository
 import com.samy.cityselector.domain.mapper.CityViewEntityMapper
 import com.samy.cityselector.domain.usecase.*
-import com.samy.cityselector.presentation.viewmodel.CitiesListVIewModel
+import com.samy.cityselector.presentation.viewmodel.CitiesListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -36,6 +36,6 @@ val domainModule = module {
     factory { GetAllCities(get(), get()) }
 }
 val viewModelModule = module {
-    viewModel { CitiesListVIewModel(get()) }
+    viewModel { CitiesListViewModel(get()) }
 }
 

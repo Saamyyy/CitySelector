@@ -1,4 +1,4 @@
-package com.samy.cityselector.presentation.ui
+package com.samy.cityselector.presentation.ui.citylist
 
 import android.os.Bundle
 import android.view.*
@@ -10,13 +10,13 @@ import com.samy.cityselector.R
 import com.samy.cityselector.presentation.entities.CityListAction
 import com.samy.cityselector.presentation.entities.CityListViewStates
 import com.samy.cityselector.presentation.entities.NoResultFound
-import com.samy.cityselector.presentation.viewmodel.CitiesListVIewModel
+import com.samy.cityselector.presentation.viewmodel.CitiesListViewModel
 import kotlinx.android.synthetic.main.fragment_city_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CityListFragment : Fragment() {
-    private val citiesListViewModel by viewModel<CitiesListVIewModel>()
+    private val citiesListViewModel by viewModel<CitiesListViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

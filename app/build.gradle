@@ -46,7 +46,6 @@ dependencies {
     implementation Libs.liveData
     implementation Libs.navigationCore
     implementation Libs.navigationKtx
-
     // Android Jetpack UI
     implementation Libs.materialDesign
     implementation Libs.constraintLayout
@@ -63,10 +62,7 @@ dependencies {
     implementation Libs.gson
     // Location
     implementation Libs.googleLocation
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation Libs.googleMaps
     //test
     testImplementation Libs.junit
     testImplementation Libs.mockito

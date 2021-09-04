@@ -1,4 +1,4 @@
-package com.samy.cityselector.presentation.ui
+package com.samy.cityselector.presentation.ui.citylist
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

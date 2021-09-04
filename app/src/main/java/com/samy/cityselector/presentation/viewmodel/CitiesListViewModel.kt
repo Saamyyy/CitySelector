@@ -9,7 +9,7 @@ import com.samy.cityselector.presentation.entities.CityListViewStates
 import com.samy.cityselector.presentation.entities.NoResultFound
 import kotlinx.coroutines.*
 
-class CitiesListVIewModel(
+class CitiesListViewModel(
     private val getCitesList: GetCitesList,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val cancelDelayPeriod: Long = 200L
