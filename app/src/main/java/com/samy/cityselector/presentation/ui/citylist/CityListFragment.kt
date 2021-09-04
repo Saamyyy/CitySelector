@@ -64,12 +64,12 @@ class CityListFragment : Fragment() {
         val searchViewMenuItem: MenuItem = menu.findItem(R.id.search)
         val searchView = searchViewMenuItem.actionView as SearchView
         searchView.queryHint = resources.getString(R.string.search_hint)
-        handleSearchQuaryValue(searchViewMenuItem, searchView)
+        handleSearchQueryValue(searchViewMenuItem, searchView)
         searchView.clearFocus()
         searchView.setOnQueryTextListener(onQueryTextListener())
     }
 
-    private fun handleSearchQuaryValue(
+    private fun handleSearchQueryValue(
         searchViewMenuItem: MenuItem,
         searchView: SearchView
     ) {
