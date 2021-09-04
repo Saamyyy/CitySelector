@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samy.cityselector.domain.usecase.GetCitesList
+import com.samy.cityselector.presentation.entities.CitiesListViewEntity
 import com.samy.cityselector.presentation.entities.CityListAction
 import com.samy.cityselector.presentation.entities.CityListViewStates
 import com.samy.cityselector.presentation.entities.NoResultFound
@@ -54,6 +55,10 @@ class CitiesListViewModel(
     private suspend fun getCitiesList(searchTerm: String) {
         cityListViewStates.postValue(CityListViewStates(isProgress = true))
         val citesList = getCitesList.getCitesList(searchTerm)
+        handleCitiesList(citesList)
+    }
+
+    private fun handleCitiesList(citesList: CitiesListViewEntity) {
         if (citesList.cities.isEmpty()) {
             cityListViewStates.postValue(CityListViewStates(error = NoResultFound))
         } else {
