@@ -127,5 +127,21 @@ class CitiesListVIewModelTest : ViewModelTest() {
             Assert.assertEquals(expected, viewModel.cityListViewStates.value)
         }
     }
-
+    @Test
+    fun `currentSearchTerm from viwmodel should holds the search term value `() {
+        runBlocking {
+            // arrange
+            val searchTerm= "newText"
+            val throwable = Throwable(message = "error")
+            whenever(getCitesList.getCitesList(searchTerm)) doAnswer {
+                throw throwable
+            }
+            val viewModel = CitiesListVIewModel(getCitesList,dispatcher,0)
+            viewModel.cityListAction.value=CityListAction.SearchCityList(searchTerm)
+            // act
+           val actual=  viewModel.currentSearchTerm
+            // assert
+            Assert.assertEquals(searchTerm,actual)
+        }
+    }
 }
