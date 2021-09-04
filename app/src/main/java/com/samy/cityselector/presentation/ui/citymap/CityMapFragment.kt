@@ -19,9 +19,9 @@ class CityMapFragment : Fragment() {
     private val args: CityMapFragmentArgs by navArgs()
 
     private val callback = OnMapReadyCallback { googleMap ->
-        val sydney = LatLng(args.lat.toDouble(), args.lon.toDouble())
-        googleMap.addMarker(MarkerOptions().position(sydney).title(args.cityName))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val currentCity = LatLng(args.lat.toDouble(), args.lon.toDouble())
+        googleMap.addMarker(MarkerOptions().position(currentCity).title(args.cityName))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentCity))
     }
 
     override fun onCreateView(

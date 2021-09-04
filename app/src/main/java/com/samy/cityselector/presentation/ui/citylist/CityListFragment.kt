@@ -17,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CityListFragment : Fragment() {
     private val citiesListViewModel by viewModel<CitiesListViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,10 +32,7 @@ class CityListFragment : Fragment() {
     private fun observeLiveData() {
         val adapter = createListAdapter()
         citiesListViewModel.cityListViewStates.observe(viewLifecycleOwner) {
-            renderUiStates(
-                it,
-                adapter
-            )
+            renderUiStates(it, adapter)
         }
     }
 
@@ -45,10 +43,7 @@ class CityListFragment : Fragment() {
         return adapter
     }
 
-    private fun renderUiStates(
-        it: CityListViewStates,
-        adapter: CitiesListAdapter
-    ) {
+    private fun renderUiStates(it: CityListViewStates, adapter: CitiesListAdapter) {
         listError.text = if (it.error != null) getErrorMessage(it.error) else null
         listLoader.isVisible = it.isProgress
         adapter.submitList(it.citiesListViewEntity.cities)
@@ -88,17 +83,11 @@ class CityListFragment : Fragment() {
     private fun onQueryTextListener() = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?) = false
         override fun onQueryTextChange(newText: String): Boolean {
-                pushCityListAction(newText)
+           pushCityListAction(newText)
             return false
         }
     }
 
-    private fun pushCityListAction(
-        newText: String
-    ) {
-            citiesListViewModel
-                .cityListAction
-                .postValue(CityListAction.SearchCityList(newText))
-
-    }
+    private fun pushCityListAction(newText: String) =
+        citiesListViewModel.cityListAction.postValue(CityListAction.SearchCityList(newText))
 }

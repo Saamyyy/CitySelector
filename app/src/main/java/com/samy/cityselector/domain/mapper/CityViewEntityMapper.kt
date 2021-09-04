@@ -10,9 +10,7 @@ class CityViewEntityMapper {
         val cityViewEntityItems = mutableListOf<CityViewEntityItem>()
         cityDomain.cities
             .map { cityViewEntityItems.add(getCityViewEntityItem(it)) }
-        return CitiesListViewEntity(
-            cities = cityViewEntityItems
-        )
+        return CitiesListViewEntity(cities = cityViewEntityItems)
     }
 
     private fun getCityViewEntityItem(it: CityDomainItem) =

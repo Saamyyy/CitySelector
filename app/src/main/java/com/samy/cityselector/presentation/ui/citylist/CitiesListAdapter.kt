@@ -30,6 +30,4 @@ class CityViewEntityItemDiffUtils : DiffUtil.ItemCallback<CityViewEntityItem>() 
     ): Boolean {
         return oldItem.title == newItem.supTitle
     }
-
-
 }
