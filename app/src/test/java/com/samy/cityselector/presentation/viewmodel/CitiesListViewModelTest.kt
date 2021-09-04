@@ -126,7 +126,7 @@ class CitiesListViewModelTest : ViewModelTest() {
         }
     }
     @Test
-    fun `currentSearchTerm from viwmodel should holds the search term value `() {
+    fun `currentSearchTerm from viewModel should holds the search term value `() {
         runBlocking {
             // arrange
             val searchTerm= "newText"

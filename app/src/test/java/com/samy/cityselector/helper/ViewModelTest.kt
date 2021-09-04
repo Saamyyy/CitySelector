@@ -13,9 +13,6 @@ import org.junit.Rule
 /**
  * Base class for ViewModel Unit tests. Inherit from it to create test cases which need
  * testCoroutineScope and Dispatcher
- *
- * @see AndroidTest
- * @see UnitTest
  */
 
 open class ViewModelTest {
