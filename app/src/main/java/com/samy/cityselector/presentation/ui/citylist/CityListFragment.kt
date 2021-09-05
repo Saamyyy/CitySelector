@@ -37,7 +37,6 @@ class CityListFragment : Fragment() {
     }
 
     private fun createListAdapter(): CitiesListAdapter {
-        cityList.layoutManager = LinearLayoutManager(context)
         val adapter = CitiesListAdapter()
         cityList.adapter = adapter
         return adapter
