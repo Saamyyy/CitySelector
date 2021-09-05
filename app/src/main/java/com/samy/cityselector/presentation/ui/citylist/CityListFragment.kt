@@ -81,7 +81,10 @@ class CityListFragment : Fragment() {
     }
 
     private fun onQueryTextListener() = object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?) = false
+        override fun onQueryTextSubmit(query: String?) : Boolean {
+            pushCityListAction(query?: "")
+            return false
+        }
         override fun onQueryTextChange(newText: String): Boolean {
            pushCityListAction(newText)
             return false
