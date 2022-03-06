@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.samy.cityselector.R
 import com.samy.cityselector.presentation.entities.CityListAction
 import com.samy.cityselector.presentation.entities.CityListViewStates
